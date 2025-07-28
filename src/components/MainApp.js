@@ -152,19 +152,7 @@ const MainApp = () => {
       <Header className="app-header">
         <div className="header-content">
           <div className="header-left">
-            <Title level={3} className="app-title">Yumi Food</Title>
-            <Select
-              placeholder="Select a restaurant"
-              style={{ width: 200, marginLeft: 20 }}
-              onChange={(value) => setSelectedRestaurant(restaurants.find(r => r.id === value))}
-              value={selectedRestaurant?.id}
-            >
-              {restaurants.map(restaurant => (
-                <Option key={restaurant.id} value={restaurant.id}>
-                  {restaurant.name}
-                </Option>
-              ))}
-            </Select>
+            <Title level={3} className="app-title" style={{ color: 'white', margin: 0 }}>Mini DoorDash</Title>
           </div>
           <div className="header-right">
             <Badge count={cart.length} showZero>
@@ -241,8 +229,23 @@ const MainApp = () => {
           </div>
         ) : (
           <div className="welcome-section">
-            <Title level={2}>Welcome to Yumi Food!</Title>
+            <Title level={2}>Welcome to Mini DoorDash!</Title>
             <Text>Please select a restaurant from the dropdown to view the menu.</Text>
+            <div style={{ marginTop: 24 }}>
+              <Select
+                placeholder="Select a restaurant"
+                style={{ width: 300 }}
+                size="large"
+                onChange={(value) => setSelectedRestaurant(restaurants.find(r => r.id === value))}
+                value={selectedRestaurant?.id}
+              >
+                {restaurants.map(restaurant => (
+                  <Option key={restaurant.id} value={restaurant.id}>
+                    {restaurant.name}
+                  </Option>
+                ))}
+              </Select>
+            </div>
           </div>
         )}
 

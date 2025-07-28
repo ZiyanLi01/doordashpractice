@@ -23,7 +23,7 @@ const Signup = () => {
       {/* Header */}
       <div className="login-header">
         <div className="header-content">
-          <h1 className="app-title">Yumi Food</h1>
+          <h1 className="app-title">Mini DoorDash</h1>
           <Button 
             type="primary" 
             className="register-button"
