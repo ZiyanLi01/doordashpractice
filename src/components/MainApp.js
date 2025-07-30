@@ -8,7 +8,6 @@ const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 const { Option } = Select;
 
-// State for restaurants and menu items
 const MainApp = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
@@ -59,14 +58,6 @@ const MainApp = () => {
       setMenuLoading(false);
     }
   };
-
-const MainApp = () => {
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
-  const [selectedRestaurantMenu, setSelectedRestaurantMenu] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [menuLoading, setMenuLoading] = useState(false);
-  const navigate = useNavigate();
 
   const addToCart = (item) => {
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
@@ -213,25 +204,25 @@ const MainApp = () => {
             <Title level={2}>Welcome to Mini DoorDash!</Title>
             <Text>Please select a restaurant from the dropdown to view the menu.</Text>
             <div style={{ marginTop: 24 }}>
-                          <Select
-              placeholder="Select a restaurant"
-              style={{ width: 300 }}
-              size="large"
-              onChange={(value) => {
-                const restaurant = restaurants.find(r => r.id === value);
-                setSelectedRestaurant(restaurant);
-                if (restaurant) {
-                  fetchMenuItems(restaurant.id);
-                }
-              }}
-              value={selectedRestaurant?.id}
-            >
-              {restaurants.map(restaurant => (
-                <Option key={restaurant.id} value={restaurant.id}>
-                  {restaurant.name}
-                </Option>
-              ))}
-            </Select>
+              <Select
+                placeholder="Select a restaurant"
+                style={{ width: 300 }}
+                size="large"
+                onChange={(value) => {
+                  const restaurant = restaurants.find(r => r.id === value);
+                  setSelectedRestaurant(restaurant);
+                  if (restaurant) {
+                    fetchMenuItems(restaurant.id);
+                  }
+                }}
+                value={selectedRestaurant?.id}
+              >
+                {restaurants.map(restaurant => (
+                  <Option key={restaurant.id} value={restaurant.id}>
+                    {restaurant.name}
+                  </Option>
+                ))}
+              </Select>
             </div>
           </div>
         )}
