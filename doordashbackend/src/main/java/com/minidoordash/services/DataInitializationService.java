@@ -216,7 +216,7 @@ public class DataInitializationService implements CommandLineRunner {
             case "chicken nuggets":
                 return "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=300&h=200&fit=crop";
             case "french fries":
-                return "https://images.unsplash.com/photo-1573089026218-9d3b0b4b0b0b?w=300&h=200&fit=crop";
+                return "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=300&h=200&fit=crop";
             case "onion rings":
                 return "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=200&fit=crop";
             case "spicy tofu soup":
@@ -269,7 +269,7 @@ public class DataInitializationService implements CommandLineRunner {
                     case "soup":
                         return "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&h=200&fit=crop";
                     case "sides":
-                        return "https://images.unsplash.com/photo-1573089026218-9d3b0b4b0b0b?w=300&h=200&fit=crop";
+                        return "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=300&h=200&fit=crop";
                     default:
                         return "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&h=200&fit=crop";
                 }
