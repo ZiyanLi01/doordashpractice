@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Select, Card, Button, Badge, message, Row, Col, Typography, Image, Spin } from 'antd';
-import { ShoppingCartOutlined, PlusOutlined, LogoutOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, PlusOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import './MainApp.css';
 
@@ -167,14 +167,6 @@ const MainApp = () => {
         ) : selectedRestaurant ? (
           <div className="restaurant-content">
             <div className="restaurant-header">
-              <Button 
-                type="default" 
-                onClick={() => setSelectedRestaurant(null)}
-                style={{ marginBottom: 16 }}
-                icon={<ArrowLeftOutlined />}
-              >
-                ← Back to Restaurants
-              </Button>
               <Image
                 src={selectedRestaurant.imageUrl}
                 alt={selectedRestaurant.name}
