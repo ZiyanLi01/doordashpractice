@@ -23,10 +23,14 @@ public class DataInitializationService implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        // Only initialize if no restaurants exist
-        if (restaurantRepository.count() == 0) {
-            initializeDemoData();
-        }
+        // Clear existing data and reinitialize with real images
+        clearExistingData();
+        initializeDemoData();
+    }
+    
+    private void clearExistingData() {
+        menuItemRepository.deleteAll();
+        restaurantRepository.deleteAll();
     }
     
     private void initializeDemoData() {
@@ -72,8 +76,28 @@ public class DataInitializationService implements CommandLineRunner {
         restaurant.setOpen(isOpen);
         restaurant.setActive(true);
         restaurant.setEstimatedDeliveryTime(30);
-        restaurant.setImageUrl("https://via.placeholder.com/300x200/FF6B35/FFFFFF?text=" + name.replace(" ", "+"));
+        
+        // Use real restaurant images
+        String imageUrl = getRestaurantImageUrl(name);
+        restaurant.setImageUrl(imageUrl);
         return restaurant;
+    }
+    
+    private String getRestaurantImageUrl(String restaurantName) {
+        switch (restaurantName) {
+            case "Burger King":
+                return "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop";
+            case "Tofu House":
+                return "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop";
+            case "Fashion Work":
+                return "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop";
+            case "Pizza Palace":
+                return "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop";
+            case "Sushi Express":
+                return "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=300&fit=crop";
+            default:
+                return "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&h=300&fit=crop";
+        }
     }
     
     private void createMenuItemsForRestaurant(Restaurant restaurant, String restaurantName) {
@@ -176,7 +200,79 @@ public class DataInitializationService implements CommandLineRunner {
         menuItem.setVegan(isVegan);
         menuItem.setGlutenFree(isGlutenFree);
         menuItem.setAvailable(true);
-        menuItem.setImageUrl("https://via.placeholder.com/200x150/FF6B35/FFFFFF?text=" + name.replace(" ", "+"));
+        
+        // Use real food images
+        String imageUrl = getMenuItemImageUrl(name, category);
+        menuItem.setImageUrl(imageUrl);
         return menuItem;
+    }
+    
+    private String getMenuItemImageUrl(String itemName, String category) {
+        // Return real food images based on item name or category
+        switch (itemName.toLowerCase()) {
+            case "whopper":
+                return "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=200&fit=crop";
+            case "chicken royale":
+            case "chicken nuggets":
+                return "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=300&h=200&fit=crop";
+            case "french fries":
+                return "https://images.unsplash.com/photo-1573089026218-9d3b0b4b0b0b?w=300&h=200&fit=crop";
+            case "onion rings":
+                return "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=200&fit=crop";
+            case "spicy tofu soup":
+                return "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&h=200&fit=crop";
+            case "bibimbap":
+                return "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=300&h=200&fit=crop";
+            case "kimchi fried rice":
+                return "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300&h=200&fit=crop";
+            case "bulgogi":
+                return "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=200&fit=crop";
+            case "japchae":
+                return "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=200&fit=crop";
+            case "gourmet burger":
+                return "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=200&fit=crop";
+            case "truffle fries":
+                return "https://images.unsplash.com/photo-1573089026218-9d3b0b4b0b0b?w=300&h=200&fit=crop";
+            case "caesar salad":
+                return "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=300&h=200&fit=crop";
+            case "wagyu steak":
+                return "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop";
+            case "lobster mac & cheese":
+                return "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=300&h=200&fit=crop";
+            case "margherita pizza":
+            case "pepperoni pizza":
+            case "bbq chicken pizza":
+                return "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&h=200&fit=crop";
+            case "garlic bread":
+                return "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop";
+            case "california roll":
+            case "salmon nigiri":
+            case "spicy tuna roll":
+                return "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=300&h=200&fit=crop";
+            case "miso soup":
+                return "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&h=200&fit=crop";
+            case "edamame":
+                return "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=200&fit=crop";
+            default:
+                // Fallback based on category
+                switch (category.toLowerCase()) {
+                    case "burgers":
+                        return "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=200&fit=crop";
+                    case "pizza":
+                        return "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&h=200&fit=crop";
+                    case "sushi":
+                    case "rolls":
+                    case "nigiri":
+                        return "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=300&h=200&fit=crop";
+                    case "salad":
+                        return "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=300&h=200&fit=crop";
+                    case "soup":
+                        return "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&h=200&fit=crop";
+                    case "sides":
+                        return "https://images.unsplash.com/photo-1573089026218-9d3b0b4b0b0b?w=300&h=200&fit=crop";
+                    default:
+                        return "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&h=200&fit=crop";
+                }
+        }
     }
 } 
