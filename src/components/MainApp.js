@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Layout, Select, Card, Button, Badge, message, Row, Col, Typography, Image } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Layout, Select, Card, Button, Badge, message, Row, Col, Typography, Image, Spin } from 'antd';
 import { ShoppingCartOutlined, PlusOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import './MainApp.css';
@@ -8,97 +8,64 @@ const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 const { Option } = Select;
 
-// Mock data for restaurants and their menus
-const restaurants = [
-  {
-    id: 1,
-    name: 'Burger King',
-    image: 'https://via.placeholder.com/300x200/FF6B35/FFFFFF?text=Burger+King',
-    menu: [
-      {
-        id: 1,
-        name: 'Whopper',
-        description: 'Flame-grilled beef patty with fresh lettuce, tomatoes, mayo, pickles, and onions',
-        price: 8.99,
-        image: 'https://via.placeholder.com/200x150/FF6B35/FFFFFF?text=Whopper'
-      },
-      {
-        id: 2,
-        name: 'Chicken Royale',
-        description: 'Crispy chicken breast with lettuce and creamy mayo',
-        price: 7.99,
-        image: 'https://via.placeholder.com/200x150/FF6B35/FFFFFF?text=Chicken+Royale'
-      },
-      {
-        id: 3,
-        name: 'French Fries',
-        description: 'Golden crispy fries seasoned with salt',
-        price: 3.99,
-        image: 'https://via.placeholder.com/200x150/FF6B35/FFFFFF?text=French+Fries'
+// State for restaurants and menu items
+const MainApp = () => {
+  const [restaurants, setRestaurants] = useState([]);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [selectedRestaurantMenu, setSelectedRestaurantMenu] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [menuLoading, setMenuLoading] = useState(false);
+  const navigate = useNavigate();
+
+  // Fetch restaurants on component mount
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
+
+  // Fetch restaurants from backend
+  const fetchRestaurants = async () => {
+    try {
+      const response = await fetch('/api/restaurants');
+      if (response.ok) {
+        const data = await response.json();
+        setRestaurants(data);
+      } else {
+        message.error('Failed to load restaurants');
       }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Tofu House',
-    image: 'https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=Tofu+House',
-    menu: [
-      {
-        id: 4,
-        name: 'Spicy Tofu Soup',
-        description: 'Traditional Korean spicy tofu soup with vegetables',
-        price: 12.99,
-        image: 'https://via.placeholder.com/200x150/4CAF50/FFFFFF?text=Spicy+Tofu+Soup'
-      },
-      {
-        id: 5,
-        name: 'Bibimbap',
-        description: 'Mixed rice bowl with vegetables, egg, and gochujang sauce',
-        price: 14.99,
-        image: 'https://via.placeholder.com/200x150/4CAF50/FFFFFF?text=Bibimbap'
-      },
-      {
-        id: 6,
-        name: 'Kimchi Fried Rice',
-        description: 'Fried rice with kimchi, vegetables, and egg',
-        price: 11.99,
-        image: 'https://via.placeholder.com/200x150/4CAF50/FFFFFF?text=Kimchi+Fried+Rice'
+    } catch (error) {
+      console.error('Error fetching restaurants:', error);
+      message.error('Network error loading restaurants');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch menu items for selected restaurant
+  const fetchMenuItems = async (restaurantId) => {
+    setMenuLoading(true);
+    try {
+      const response = await fetch(`/api/menu-items/restaurant/${restaurantId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setSelectedRestaurantMenu(data);
+      } else {
+        message.error('Failed to load menu items');
       }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Fashion Work',
-    image: 'https://via.placeholder.com/300x200/9C27B0/FFFFFF?text=Fashion+Work',
-    menu: [
-      {
-        id: 7,
-        name: 'Gourmet Burger',
-        description: 'Premium beef burger with artisanal cheese and special sauce',
-        price: 16.99,
-        image: 'https://via.placeholder.com/200x150/9C27B0/FFFFFF?text=Gourmet+Burger'
-      },
-      {
-        id: 8,
-        name: 'Truffle Fries',
-        description: 'Crispy fries with truffle oil and parmesan cheese',
-        price: 8.99,
-        image: 'https://via.placeholder.com/200x150/9C27B0/FFFFFF?text=Truffle+Fries'
-      },
-      {
-        id: 9,
-        name: 'Caesar Salad',
-        description: 'Fresh romaine lettuce with caesar dressing and croutons',
-        price: 13.99,
-        image: 'https://via.placeholder.com/200x150/9C27B0/FFFFFF?text=Caesar+Salad'
-      }
-    ]
-  }
-];
+    } catch (error) {
+      console.error('Error fetching menu items:', error);
+      message.error('Network error loading menu items');
+    } finally {
+      setMenuLoading(false);
+    }
+  };
 
 const MainApp = () => {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [selectedRestaurantMenu, setSelectedRestaurantMenu] = useState([]);
   const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [menuLoading, setMenuLoading] = useState(false);
   const navigate = useNavigate();
 
   const addToCart = (item) => {
@@ -178,75 +145,93 @@ const MainApp = () => {
       </Header>
 
       <Content className="app-content">
-        {selectedRestaurant ? (
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '50px' }}>
+            <Spin size="large" />
+            <div style={{ marginTop: 16 }}>Loading restaurants...</div>
+          </div>
+        ) : selectedRestaurant ? (
           <div className="restaurant-content">
             <div className="restaurant-header">
               <Image
-                src={selectedRestaurant.image}
+                src={selectedRestaurant.imageUrl}
                 alt={selectedRestaurant.name}
                 className="restaurant-image"
               />
               <Title level={2}>{selectedRestaurant.name}</Title>
             </div>
             
-            <Row gutter={[16, 16]} className="menu-grid">
-              {selectedRestaurant.menu.map(item => (
-                <Col xs={24} sm={12} md={8} lg={6} key={item.id}>
-                  <Card
-                    hoverable
-                    className="menu-item-card"
-                    cover={
-                      <Image
-                        alt={item.name}
-                        src={item.image}
-                        className="menu-item-image"
-                      />
-                    }
-                    actions={[
-                      <Button 
-                        type="primary" 
-                        icon={<PlusOutlined />}
-                        onClick={() => addToCart(item)}
-                        className="add-to-cart-btn"
-                      >
-                        Add to Cart
-                      </Button>
-                    ]}
-                  >
-                    <Card.Meta
-                      title={item.name}
-                      description={
-                        <div>
-                          <Text type="secondary">{item.description}</Text>
-                          <div className="price-section">
-                            <Text strong className="price">${item.price}</Text>
-                          </div>
-                        </div>
+            {menuLoading ? (
+              <div style={{ textAlign: 'center', padding: '50px' }}>
+                <Spin size="large" />
+                <div style={{ marginTop: 16 }}>Loading menu...</div>
+              </div>
+            ) : (
+              <Row gutter={[16, 16]} className="menu-grid">
+                {selectedRestaurantMenu.map(item => (
+                  <Col xs={24} sm={12} md={8} lg={6} key={item.id}>
+                    <Card
+                      hoverable
+                      className="menu-item-card"
+                      cover={
+                        <Image
+                          alt={item.name}
+                          src={item.imageUrl}
+                          className="menu-item-image"
+                        />
                       }
-                    />
-                  </Card>
-                </Col>
-              ))}
-            </Row>
+                      actions={[
+                        <Button 
+                          type="primary" 
+                          icon={<PlusOutlined />}
+                          onClick={() => addToCart(item)}
+                          className="add-to-cart-btn"
+                        >
+                          Add to Cart
+                        </Button>
+                      ]}
+                    >
+                      <Card.Meta
+                        title={item.name}
+                        description={
+                          <div>
+                            <Text type="secondary">{item.description}</Text>
+                            <div className="price-section">
+                              <Text strong className="price">${item.price}</Text>
+                            </div>
+                          </div>
+                        }
+                      />
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            )}
           </div>
         ) : (
           <div className="welcome-section">
             <Title level={2}>Welcome to Mini DoorDash!</Title>
             <Text>Please select a restaurant from the dropdown to view the menu.</Text>
             <div style={{ marginTop: 24 }}>
-              <Select
-                placeholder="Select a restaurant"
-                style={{ width: 300 }}
-                size="large"
-                onChange={(value) => setSelectedRestaurant(restaurants.find(r => r.id === value))}
-                value={selectedRestaurant?.id}
-              >
-                {restaurants.map(restaurant => (
-                  <Option key={restaurant.id} value={restaurant.id}>
-                    {restaurant.name}
-                  </Option>
-                ))}
-              </Select>
+                          <Select
+              placeholder="Select a restaurant"
+              style={{ width: 300 }}
+              size="large"
+              onChange={(value) => {
+                const restaurant = restaurants.find(r => r.id === value);
+                setSelectedRestaurant(restaurant);
+                if (restaurant) {
+                  fetchMenuItems(restaurant.id);
+                }
+              }}
+              value={selectedRestaurant?.id}
+            >
+              {restaurants.map(restaurant => (
+                <Option key={restaurant.id} value={restaurant.id}>
+                  {restaurant.name}
+                </Option>
+              ))}
+            </Select>
             </div>
           </div>
         )}
