@@ -112,7 +112,14 @@ const MainApp = () => {
       <Header className="app-header">
         <div className="header-content">
           <div className="header-left">
-            <Title level={3} className="app-title" style={{ color: 'white', margin: 0 }}>Mini DoorDash</Title>
+            <Title 
+              level={3} 
+              className="app-title" 
+              style={{ color: 'white', margin: 0, cursor: 'pointer' }}
+              onClick={() => setSelectedRestaurant(null)}
+            >
+              Mini DoorDash
+            </Title>
           </div>
           <div className="header-center">
             {selectedRestaurant && (

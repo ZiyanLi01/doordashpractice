@@ -40,10 +40,15 @@
 }
 
 .app-title {
-  color: white !important;
+  color: white;
   margin: 0;
-  font-size: 1.8rem;
-  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.app-title:hover {
+  opacity: 0.8;
+  text-decoration: underline;
 }
 
 .app-title h3 {
