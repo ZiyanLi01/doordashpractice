@@ -121,29 +121,6 @@ const MainApp = () => {
               Mini DoorDash
             </Title>
           </div>
-          <div className="header-center">
-            {selectedRestaurant && (
-              <Select
-                placeholder="Switch restaurant"
-                style={{ width: 200 }}
-                size="middle"
-                value={selectedRestaurant?.id}
-                onChange={(value) => {
-                  const restaurant = restaurants.find(r => r.id === value);
-                  setSelectedRestaurant(restaurant);
-                  if (restaurant) {
-                    fetchMenuItems(restaurant.id);
-                  }
-                }}
-              >
-                {restaurants.map(restaurant => (
-                  <Option key={restaurant.id} value={restaurant.id}>
-                    {restaurant.name}
-                  </Option>
-                ))}
-              </Select>
-            )}
-          </div>
           <div className="header-right">
             <Badge count={cart.length} showZero>
               <Button 
@@ -173,6 +150,29 @@ const MainApp = () => {
           </div>
         ) : selectedRestaurant ? (
           <div className="restaurant-content">
+            {/* Restaurant Selector - Moved here */}
+            <div className="restaurant-selector">
+              <Select
+                placeholder="Switch restaurant"
+                style={{ width: 300 }}
+                size="large"
+                value={selectedRestaurant?.id}
+                onChange={(value) => {
+                  const restaurant = restaurants.find(r => r.id === value);
+                  setSelectedRestaurant(restaurant);
+                  if (restaurant) {
+                    fetchMenuItems(restaurant.id);
+                  }
+                }}
+              >
+                {restaurants.map(restaurant => (
+                  <Option key={restaurant.id} value={restaurant.id}>
+                    {restaurant.name}
+                  </Option>
+                ))}
+              </Select>
+            </div>
+            
             <div className="restaurant-header">
               <Image
                 src={selectedRestaurant.imageUrl}
