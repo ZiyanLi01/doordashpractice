@@ -15,13 +15,28 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .header-left {
   display: flex;
   align-items: center;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .app-title {
@@ -33,11 +48,6 @@
 
 .app-title h3 {
   color: white !important;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
 }
 
 .app-content {
@@ -61,11 +71,15 @@
 
 .restaurant-header {
   text-align: center;
-  margin-bottom: 32px;
-  padding: 24px;
+  margin-bottom: 2rem;
+  padding: 20px;
   background: white;
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-header .ant-btn {
+  margin-bottom: 16px;
 }
 
 .restaurant-image {
@@ -74,7 +88,7 @@
   height: 200px;
   object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .menu-grid {

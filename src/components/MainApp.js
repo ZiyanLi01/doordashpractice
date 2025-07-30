@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Select, Card, Button, Badge, message, Row, Col, Typography, Image, Spin } from 'antd';
-import { ShoppingCartOutlined, PlusOutlined, LogoutOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, PlusOutlined, LogoutOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import './MainApp.css';
 
@@ -114,6 +114,29 @@ const MainApp = () => {
           <div className="header-left">
             <Title level={3} className="app-title" style={{ color: 'white', margin: 0 }}>Mini DoorDash</Title>
           </div>
+          <div className="header-center">
+            {selectedRestaurant && (
+              <Select
+                placeholder="Switch restaurant"
+                style={{ width: 200 }}
+                size="middle"
+                value={selectedRestaurant?.id}
+                onChange={(value) => {
+                  const restaurant = restaurants.find(r => r.id === value);
+                  setSelectedRestaurant(restaurant);
+                  if (restaurant) {
+                    fetchMenuItems(restaurant.id);
+                  }
+                }}
+              >
+                {restaurants.map(restaurant => (
+                  <Option key={restaurant.id} value={restaurant.id}>
+                    {restaurant.name}
+                  </Option>
+                ))}
+              </Select>
+            )}
+          </div>
           <div className="header-right">
             <Badge count={cart.length} showZero>
               <Button 
@@ -144,6 +167,14 @@ const MainApp = () => {
         ) : selectedRestaurant ? (
           <div className="restaurant-content">
             <div className="restaurant-header">
+              <Button 
+                type="default" 
+                onClick={() => setSelectedRestaurant(null)}
+                style={{ marginBottom: 16 }}
+                icon={<ArrowLeftOutlined />}
+              >
+                ← Back to Restaurants
+              </Button>
               <Image
                 src={selectedRestaurant.imageUrl}
                 alt={selectedRestaurant.name}
