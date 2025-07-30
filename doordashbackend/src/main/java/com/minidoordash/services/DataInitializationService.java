@@ -65,12 +65,12 @@ public class DataInitializationService implements CommandLineRunner {
         restaurant.setDescription(description);
         restaurant.setAddress(address);
         restaurant.setPhoneNumber(phone);
-        restaurant.setRating(rating);
+        restaurant.setRating(BigDecimal.valueOf(rating));
         restaurant.setTotalRatings(totalRatings);
         restaurant.setDeliveryFee(BigDecimal.valueOf(deliveryFee));
         restaurant.setMinimumOrder(BigDecimal.valueOf(minimumOrder));
-        restaurant.setIsOpen(isOpen);
-        restaurant.setIsActive(true);
+        restaurant.setOpen(isOpen);
+        restaurant.setActive(true);
         restaurant.setEstimatedDeliveryTime(30);
         restaurant.setImageUrl("https://via.placeholder.com/300x200/FF6B35/FFFFFF?text=" + name.replace(" ", "+"));
         return restaurant;
@@ -172,10 +172,10 @@ public class DataInitializationService implements CommandLineRunner {
         menuItem.setRestaurant(restaurant);
         menuItem.setCalories(calories);
         menuItem.setPreparationTime(prepTime);
-        menuItem.setIsVegetarian(isVegetarian);
-        menuItem.setIsVegan(isVegan);
-        menuItem.setIsGlutenFree(isGlutenFree);
-        menuItem.setIsAvailable(true);
+        menuItem.setVegetarian(isVegetarian);
+        menuItem.setVegan(isVegan);
+        menuItem.setGlutenFree(isGlutenFree);
+        menuItem.setAvailable(true);
         menuItem.setImageUrl("https://via.placeholder.com/200x150/FF6B35/FFFFFF?text=" + name.replace(" ", "+"));
         return menuItem;
     }

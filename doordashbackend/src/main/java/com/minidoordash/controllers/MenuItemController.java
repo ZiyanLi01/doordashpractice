@@ -56,7 +56,7 @@ public class MenuItemController {
     @GetMapping("/search")
     @Operation(summary = "Search menu items", description = "Search menu items by name or description")
     public ResponseEntity<List<MenuItem>> searchMenuItems(@RequestParam String keyword) {
-        List<MenuItem> menuItems = menuItemRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword);
+        List<MenuItem> menuItems = menuItemRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword);
         return ResponseEntity.ok(menuItems);
     }
 } 
