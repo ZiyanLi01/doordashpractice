@@ -143,6 +143,8 @@ const MainApp = () => {
   };
 
   const handleLogout = () => {
+    // Clear stored user data
+    localStorage.removeItem('user');
     message.success('Logged out successfully!');
     navigate('/login');
   };

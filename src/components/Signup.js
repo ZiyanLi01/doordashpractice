@@ -8,14 +8,36 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     setLoading(true);
-    // Simulate signup process
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: values.username,
+          email: values.email,
+          fullName: values.fullName,
+          password: values.password
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        message.success('Registration successful! Please login.');
+        navigate('/login');
+      } else {
+        const errorData = await response.json();
+        message.error(errorData.error || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      message.error('Network error. Please try again.');
+    } finally {
       setLoading(false);
-      message.success('Registration successful! Please login.');
-      navigate('/login');
-    }, 1000);
+    }
   };
 
   return (

@@ -8,14 +8,36 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     setLoading(true);
-    // Simulate login process
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: values.username,
+          password: values.password
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        message.success('Login successful!');
+        // Store user data in localStorage or state management
+        localStorage.setItem('user', JSON.stringify(data.user));
+        navigate('/app');
+      } else {
+        const errorData = await response.json();
+        message.error(errorData.error || 'Login failed');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      message.error('Network error. Please try again.');
+    } finally {
       setLoading(false);
-      message.success('Login successful!');
-      navigate('/app');
-    }, 1000);
+    }
   };
 
   return (
