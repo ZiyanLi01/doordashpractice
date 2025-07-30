@@ -1,5 +1,6 @@
 package com.minidoordash.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -63,6 +64,7 @@ public class Restaurant {
     private User owner;
     
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<MenuItem> menuItems;
     
     @CreationTimestamp
