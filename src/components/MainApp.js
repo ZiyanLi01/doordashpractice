@@ -152,25 +152,29 @@ const MainApp = () => {
           <div className="restaurant-content">
             {/* Restaurant Selector - Moved here */}
             <div className="restaurant-selector">
-              <Select
-                placeholder="Switch restaurant"
-                style={{ width: 300 }}
-                size="large"
-                value={selectedRestaurant?.id}
-                onChange={(value) => {
-                  const restaurant = restaurants.find(r => r.id === value);
-                  setSelectedRestaurant(restaurant);
-                  if (restaurant) {
-                    fetchMenuItems(restaurant.id);
-                  }
-                }}
-              >
-                {restaurants.map(restaurant => (
-                  <Option key={restaurant.id} value={restaurant.id}>
-                    {restaurant.name}
-                  </Option>
-                ))}
-              </Select>
+              <Title level={2}>Welcome to Mini DoorDash!</Title>
+              <Text>Please select a restaurant from the dropdown to view the menu.</Text>
+              <div style={{ marginTop: 24 }}>
+                <Select
+                  placeholder="Switch restaurant"
+                  style={{ width: 300 }}
+                  size="large"
+                  value={selectedRestaurant?.id}
+                  onChange={(value) => {
+                    const restaurant = restaurants.find(r => r.id === value);
+                    setSelectedRestaurant(restaurant);
+                    if (restaurant) {
+                      fetchMenuItems(restaurant.id);
+                    }
+                  }}
+                >
+                  {restaurants.map(restaurant => (
+                    <Option key={restaurant.id} value={restaurant.id}>
+                      {restaurant.name}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
             </div>
             
             <div className="restaurant-header">
