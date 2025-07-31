@@ -1,12 +1,22 @@
-# Getting Started with Create React App
+# Mini DoorDash Clone
+
+A full-stack food delivery application with React frontend and Spring Boot backend.
+
+## Project Structure
+
+- **Frontend**: React application (Create React App)
+- **Backend**: Spring Boot REST API with PostgreSQL database
+- **Database**: Supabase PostgreSQL
+
+## Frontend (React)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+#### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -14,57 +24,71 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+#### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+#### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Backend (Spring Boot)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Running the Backend
 
-### `npm run eject`
+1. Navigate to the backend directory:
+   ```bash
+   cd doordashbackend
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Set environment variables:
+   ```bash
+   export SUPABASE_DB_URL="jdbc:postgresql://db.fbqinbkfgckofqokgevu.supabase.co:5432/postgres?sslmode=require"
+   export SUPABASE_DB_USER="postgres"
+   export SUPABASE_DB_PASSWORD="your_password"
+   export JWT_SECRET="your_jwt_secret"
+   export SUPABASE_ANON_KEY="your_anon_key"
+   export SUPABASE_SERVICE_KEY="your_service_key"
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Run the application:
+   ```bash
+   mvn spring-boot:run
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The backend will start on `http://localhost:8080`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### API Endpoints
+
+- `GET /api/health` - Health check
+- `GET /api/restaurants` - Get all restaurants
+- `GET /api/restaurants/{id}` - Get restaurant by ID
+- `GET /api/restaurants/{id}/menu` - Get restaurant menu
+- `POST /api/users/login` - User login
+- `POST /api/users/register` - User registration
+
+## Database
+
+The application uses Supabase PostgreSQL database with:
+- Direct connection (port 5432) for Spring Boot compatibility
+- SSL mode required
+- JPA/Hibernate for ORM
+
+## Deployment
+
+### Railway Deployment
+
+The backend is configured for Railway deployment with:
+- Nixpacks build system
+- Health check endpoint
+- Environment variable configuration
+
+See `doordashbackend/RAILWAY_DEPLOYMENT.md` for detailed deployment instructions.
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [React documentation](https://reactjs.org/)
+- [Spring Boot documentation](https://spring.io/projects/spring-boot)
+- [Supabase documentation](https://supabase.com/docs)
