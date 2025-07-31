@@ -109,12 +109,13 @@
 }
 
 .menu-item-card {
-  height: 400px;
+  height: 450px; /* Fixed height for all cards */
   transition: all 0.3s ease;
   border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative; /* For absolute positioning of price */
 }
 
 .menu-item-card .ant-card-body {
@@ -122,12 +123,14 @@
   display: flex;
   flex-direction: column;
   padding: 16px;
+  position: relative; /* For price positioning */
 }
 
 .menu-item-card .ant-card-meta {
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .menu-item-card .ant-card-meta-title {
@@ -135,13 +138,20 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 1.4;
+  margin-top: 8px; /* Consistent spacing from image */
+  height: 44px; /* Fixed height for title (2 lines) */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .menu-item-card .ant-card-meta-description {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  position: relative;
 }
 
 .menu-item-card .ant-card-meta-description .ant-typography {
@@ -150,14 +160,16 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4; /* Show max 4 lines of description */
   -webkit-box-orient: vertical;
   flex: 1;
+  min-height: 80px; /* Minimum height for description */
 }
 
 .menu-item-card .ant-card-actions {
   margin-top: auto;
   padding: 0 16px 16px;
+  position: relative;
 }
 
 .menu-item-card:hover {
@@ -166,8 +178,10 @@
 }
 
 .menu-item-image {
-  height: 200px;
+  height: 200px; /* Fixed height for all images */
   object-fit: cover;
+  width: 100%;
+  display: block;
 }
 
 .add-to-cart-btn {
@@ -176,16 +190,17 @@
 }
 
 .price-section {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 8px;
+  position: absolute;
+  top: 65px; /* Moved down 1px from 16px */
+  right: 16px; /* Same position as card body padding */
+  z-index: 1;
 }
 
 .price {
   color: #1890ff;
   font-size: 16px;
+  font-weight: 600;
+  margin: 0;
 }
 
 /* Cart Sidebar */
@@ -299,6 +314,14 @@
   .menu-grid {
     margin-bottom: 80px; /* Space for cart sidebar */
   }
+  
+  .menu-item-card {
+    height: 420px; /* Consistent height on tablets */
+  }
+  
+  .menu-item-image {
+    height: 180px; /* Consistent image height on tablets */
+  }
 }
 
 @media (max-width: 480px) {
@@ -317,6 +340,19 @@
   }
   
   .menu-item-image {
-    height: 150px;
+    height: 150px; /* Keep consistent image height */
+  }
+  
+  .menu-item-card {
+    height: 400px; /* Slightly smaller on mobile but still consistent */
+  }
+  
+  .menu-item-card .ant-card-meta-title {
+    height: 40px; /* Smaller title height on mobile */
+  }
+  
+  .menu-item-card .ant-card-meta-description .ant-typography {
+    min-height: 60px; /* Smaller description height on mobile */
+    -webkit-line-clamp: 3; /* Fewer lines on mobile */
   }
 } 

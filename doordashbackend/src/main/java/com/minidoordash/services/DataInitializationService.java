@@ -233,7 +233,7 @@ public class DataInitializationService implements CommandLineRunner {
             case "gourmet burger":
                 return "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=200&fit=crop";
             case "truffle fries":
-                return "https://images.unsplash.com/photo-1573089026218-9d3b0b4b0b0b?w=300&h=200&fit=crop";
+                return "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop";
             case "caesar salad":
                 return "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=300&h=200&fit=crop";
             case "wagyu steak":
